@@ -24,36 +24,15 @@ func main() {
 	line := scanner.Text()
 
 	// part 1
-	lookahead := 4
-	fmt.Println(line)
-	for i := 0; i < len(line)-lookahead; i++ {
-		chars := make([]string, lookahead)
-		// constant lookahead might be not efficient but it my only idea rn
-		markerFound := true
-		for j := 0; j < lookahead; j++ {
-			newChar := string(line[i+j])
-			if contains(chars, newChar) {
-				markerFound = false
-				break
-			} else {
-				chars[j] = newChar
-			}
-		}
-
-		if markerFound {
-			fmt.Printf("Found marker at %d\n", i+lookahead)
-			marker := ""
-			for k := 0; k < len(chars); k++ {
-				marker += string(chars[k])
-			}
-			fmt.Printf("Marker is %s\n", marker)
-			break
-		}
-	}
+	searchMarker(line, 4)
 
 	// part 2
-	lookahead = 14
-	fmt.Println(line)
+	searchMarker(line, 14)
+
+}
+
+// search string for a marker of length lookahead with no repeating characters
+func searchMarker(line string, lookahead int) string {
 	for i := 0; i < len(line)-lookahead; i++ {
 		chars := make([]string, lookahead)
 		// constant lookahead might be not efficient but it my only idea rn
@@ -75,9 +54,10 @@ func main() {
 				marker += string(chars[k])
 			}
 			fmt.Printf("Marker is %s\n", marker)
-			break
+			return marker
 		}
 	}
+	return "no marker found"	
 }
 
 func contains(s []string, e string) bool {
